@@ -1,21 +1,14 @@
-import { useState } from "react";
 import { useLoaderData, useParams } from "react-router-dom";
-import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
 import { Button } from "@material-tailwind/react";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { saveToLocalStorage, getFromLocalStorage } from "../utility/LocalStroge"; // You may need to adjust this import based on your local storage utility functions
-
-
-
-
-
-
+import "react-toastify/dist/ReactToastify.css";
+import { saveBook } from "../utility/LocalStorage";
+import { useState } from "react";
 
 const BookDetails = () => {
-    const [clicked, setClicked] = useState(false);
-    
+  const [isAddedToWishlist, setIsAddedToWishlist] = useState(false);
+  const [isAddedToRead, setIsAddedToRead] = useState(false);
+
   const books = useLoaderData();
   const { bookId } = useParams();
   const idInt = parseInt(bookId);
@@ -30,17 +23,29 @@ const BookDetails = () => {
       </div>
     );
   }
-  const handleButtonClick = (action) => {
-    
-    if (!clicked) {
-      // Show toast notification
-      toast(`Item added to local storage and marked as ${action}!`);
-      saveToLocalStorage(bookId);
-      setClicked(true);
+
+  const handleReadButtonClick = () => {
+    if (!isAddedToRead) {
+      saveBook(book);
+      toast.success("Book added to Read");
+      setIsAddedToRead(true);
+      setIsAddedToWishlist(true);
     } else {
-      toast(`Item already added to local storage and marked as ${action}!`);
+      toast.error("Book already added to Read");
     }
   };
+  const handleWishlistButtonClick = () => {
+    if (!isAddedToWishlist && !isAddedToRead) {
+      saveBook(book);
+      toast.success("Book added to Wishlist");
+      setIsAddedToWishlist(true);
+    } else if (isAddedToRead) {
+      toast.error("Book already added to Read, cannot be added to Wishlist");
+    } else {
+      toast.error("Book already added to Wishlist");
+    }
+  };
+
   const {
     image,
     bookName,
@@ -55,9 +60,9 @@ const BookDetails = () => {
   } = book;
 
   return (
-    <div className="lg:flex justify-between gap-20  rounded-xl p-10 mt-10 shadow-xl">
-      <div className=" rounded-2xl shadow-xl bg-white p-10 ">
-        <img src={image} alt={bookName} className="w-[500px] h-[400px] " />
+    <div className="lg:flex justify-between  gap-20 rounded-xl p-10 mt-10 shadow-xl">
+      <div className="rounded-2xl shadow-xl bg-white p-10 lg:my-0 my-4 ">
+        <img src={image} alt={bookName} className="lg:w-[500px] h-[400px] " />
       </div>
       <div className="space-y-3">
         <h1 className="text-5xl font-serif font-semibold">{bookName}</h1>
@@ -93,44 +98,25 @@ const BookDetails = () => {
           <span className="font-bold">Rating:</span> {rating}
         </p>
         <div className="flex gap-2">
-          <Link to="./listedBooks">
-            <Button
-              size="md"
-              variant="outlined"
-              className="hidden lg:inline-block border-pink-300"
-              onClick={() => handleButtonClick("Read")}
-            >
-              <span>Read</span>
-            </Button>
-          </Link>
-          <Link to="./listedBooks">
-            <Button
-              size="md"
-              className="hidden lg:inline-block bg-gradient-to-r from-purple-500 to-pink-300"
-              onClick={() => handleButtonClick("Wishlist")}
-            >
-              <span>Wish List</span>
-            </Button>
-          </Link>
+          <Button
+            size="md"
+            variant="outlined"
+            className=" lg:inline-block border-pink-300"
+            onClick={handleReadButtonClick}
+          >
+            <span>Read</span>
+          </Button>
+          <Button
+            size="md"
+            className=" lg:inline-block bg-gradient-to-r from-purple-500 to-pink-300"
+            onClick={handleWishlistButtonClick}
+          >
+            <span>Wish List</span>
+          </Button>
         </div>
       </div>
     </div>
   );
-};
-
-BookDetails.propTypes = {
-  book: PropTypes.shape({
-    image: PropTypes.string.isRequired,
-    author: PropTypes.string.isRequired,
-    tags: PropTypes.arrayOf(PropTypes.string).isRequired,
-    bookName: PropTypes.string.isRequired,
-    rating: PropTypes.number.isRequired,
-    category: PropTypes.string.isRequired,
-    review: PropTypes.string.isRequired,
-    totalPages: PropTypes.number.isRequired,
-    publisher: PropTypes.string.isRequired,
-    yearOfPublishing: PropTypes.number.isRequired,
-  }).isRequired,
 };
 
 export default BookDetails;
