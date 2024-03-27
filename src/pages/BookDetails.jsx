@@ -24,21 +24,24 @@ const BookDetails = () => {
     );
   }
 
-  const handleReadButtonClick = () => {
+  const handleReadButtonClick = (book) => {
     if (!isAddedToRead) {
       saveBook(book);
       toast.success("Book added to Read");
       setIsAddedToRead(true);
       setIsAddedToWishlist(true);
+      
     } else {
       toast.error("Book already added to Read");
     }
   };
-  const handleWishlistButtonClick = () => {
+
+  const handleWishlistButtonClick = (book) => {
     if (!isAddedToWishlist && !isAddedToRead) {
       saveBook(book);
       toast.success("Book added to Wishlist");
       setIsAddedToWishlist(true);
+      
     } else if (isAddedToRead) {
       toast.error("Book already added to Read, cannot be added to Wishlist");
     } else {
@@ -60,9 +63,9 @@ const BookDetails = () => {
   } = book;
 
   return (
-    <div className="lg:flex justify-between  gap-20 rounded-xl p-10 mt-10 shadow-xl">
-      <div className="rounded-2xl shadow-xl bg-white p-10 lg:my-0 my-4 ">
-        <img src={image} alt={bookName} className="lg:w-[500px] h-[400px] " />
+    <div className="lg:flex justify-between gap-20 rounded-xl p-10 mt-10 shadow-xl">
+      <div className="rounded-2xl shadow-xl bg-white p-10 lg:my-0 my-4">
+        <img src={image} alt={bookName} className="lg:w-[500px] h-[400px]" />
       </div>
       <div className="space-y-3">
         <h1 className="text-5xl font-serif font-semibold">{bookName}</h1>
@@ -102,16 +105,17 @@ const BookDetails = () => {
             size="md"
             variant="outlined"
             className=" lg:inline-block border-pink-300"
-            onClick={handleReadButtonClick}
+            onClick={() => handleReadButtonClick(book)}
           >
             <span>Read</span>
           </Button>
+
           <Button
             size="md"
             className=" lg:inline-block bg-gradient-to-r from-purple-500 to-pink-300"
-            onClick={handleWishlistButtonClick}
+            onClick={() => handleWishlistButtonClick(book)}
           >
-            <span>Wish List</span>
+            <span>Wishlist</span>
           </Button>
         </div>
       </div>

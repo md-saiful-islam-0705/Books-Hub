@@ -1,37 +1,62 @@
-import { useState } from 'react';
-import PropTypes from 'prop-types';
+import { useState } from "react";
+import PropTypes from "prop-types";
+import BookCard from "../BookCard/BookCard";
 
-const Tab = ({ tabs, defaultTab, onTabChange }) => {
-  const [activeTab, setActiveTab] = useState(defaultTab);
+const Tab = ({ books, onTabChange, onDelete }) => {
+  const [activeTab, setActiveTab] = useState("read");
 
-  const handleTabClick = (tab) => {
+  const handleTabChange = (tab) => {
     setActiveTab(tab);
     onTabChange(tab);
   };
 
   return (
     <div role="tablist" className="tabs tabs-lifted">
-      {tabs.map((tab) => (
-        <a
-          key={tab.value}
-          role="tab"
-          className={`tab ${activeTab === tab.value ? 'tab-active' : ''}`}
-          onClick={() => handleTabClick(tab.value)}
-        >
-          {tab.label}
-        </a>
-      ))}
+      <input
+        type="radio"
+        name="my_tabs_2"
+        role="tab"
+        className="tab"
+        aria-label="Read"
+        checked={activeTab === "read"}
+        onChange={() => handleTabChange("read")}
+      />
+      <div
+        role="tabpanel"
+        className="tab-content bg-base-100 border-base-300 rounded-box p-6"
+      >
+        {activeTab === "read" &&
+          books.map((book) => (
+            <BookCard key={book.bookId} book={book} onDelete={onDelete} />
+          ))}
+      </div>
+
+      <input
+        type="radio"
+        name="my_tabs_2"
+        role="tab"
+        className="tab"
+        aria-label="Wishlist"
+        checked={activeTab === "wishlist"}
+        onChange={() => handleTabChange("wishlist")}
+      />
+      <div
+        role="tabpanel"
+        className="tab-content bg-base-100 border-base-300 rounded-box p-6"
+      >
+        {activeTab === "wishlist" &&
+          books.map((book) => (
+            <BookCard key={book.bookId} book={book} onDelete={onDelete} />
+          ))}
+      </div>
     </div>
   );
 };
 
 Tab.propTypes = {
-  tabs: PropTypes.arrayOf(PropTypes.shape({
-    label: PropTypes.string.isRequired,
-    value: PropTypes.string.isRequired,
-  })).isRequired,
-  defaultTab: PropTypes.string.isRequired,
+  books: PropTypes.arrayOf(PropTypes.object).isRequired,
   onTabChange: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
 };
 
 export default Tab;

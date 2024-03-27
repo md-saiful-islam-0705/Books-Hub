@@ -8,7 +8,6 @@ import About from '../pages/About';
 import News from '../pages/News';
 import BookDetails from '../pages/BookDetails';
 
-
 export const router = createBrowserRouter([
   {
     path: '/',
@@ -19,13 +18,11 @@ export const router = createBrowserRouter([
         path: '/',
         element: <Home />,
         loader: () => fetch('/books.json'),
-        children: [
-            
-        ]
+        children: []
       },
       {
         path: '/listedBooks',
-        element: <ListedBooks/>
+        element: <ListedBooks />,
       },
       {
         path: '/readPages',
@@ -41,13 +38,9 @@ export const router = createBrowserRouter([
       },
       {
         path: '/bookDetails/:bookId', 
-        element: <BookDetails></BookDetails>,
+        element: <BookDetails />,
         loader: () => fetch('/books.json'),
-
       },
-      
-      
-      
     ],
   },
 ]);
