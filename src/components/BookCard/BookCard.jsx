@@ -32,7 +32,7 @@ const BookCard = ({ book, onDelete }) => {
         <h1 className="text-2xl font-serif font-semibold">{bookName}</h1>
         <p className="text-sm text-gray-500 font-bold">By: {author}</p>
         <hr />
-        <div className="flex flex-wrap py-2">
+        <div className="flex flex-wrap py-2 gap-2">
           <div>
             {tags.map((tag, index) => (
               <span
@@ -56,7 +56,7 @@ const BookCard = ({ book, onDelete }) => {
           </div>
         </div>
         <hr />
-        <div className="flex gap-2 items-center">
+        <div className="flex gap-4 my-4 items-center">
           <div className="flex gap-1 items-center">
             <FiBook />
             <p className="text-sm ">
@@ -70,16 +70,16 @@ const BookCard = ({ book, onDelete }) => {
             </p>
           </div>
         </div>
-        <div className="flex items-center gap-2 ">
-          <p className="text-sm py-2 px-3 bg-pink-100  rounded-full">
+        <div className="flex lg:flex-row flex-col  items-center gap-2 ">
+          <p className="text-sm py-2 px-3 bg-pink-100 lg:w-auto w-full  rounded-full">
             <span className="font-bold">Category:</span> {category}
           </p>
-          <p className="text-sm py-2 px-3 bg-blue-100  rounded-full">
+          <p className="text-sm py-2 px-3 bg-blue-100 lg:w-auto w-full  rounded-full">
             <span className="font-bold">Rating: </span> {rating}
           </p>
           <Link
             to={`/bookDetails/${bookId}`}
-            className="btn btn-sm btn-outline rounded-full "
+            className="btn btn-sm btn-outline rounded-full lg:w-auto w-full "
           >
             View Details
           </Link>
