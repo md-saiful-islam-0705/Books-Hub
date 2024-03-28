@@ -1,67 +1,51 @@
-import PropTypes from "prop-types";
+import React from 'react';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Cell, ResponsiveContainer } from 'recharts';
 
-const colors = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "red", "pink"];
+const colors = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', 'red', 'pink'];
 
 const Chart = ({ data }) => {
-  const CustomBar = ({ fill, width, height }) => {
-    const path = `M0,${height} C${width / 3},${height} ${width / 2},${
-      height / 3
-    } ${width / 2},0 C${width / 2},${height / 3} ${
-      (2 * width) / 3
-    },${height} ${width},${height} Z`;
-
-    return <path d={path} fill={fill} />;
-  };
-
-  const barWidth = 100;
-  const gap = 10;
-  const textOffset = 15;
-
   return (
-    <div className="border shadow-md rounded-md p-4 lg:w-full w-full  overflow-auto ">
-      <svg width={800} height="400">
-        {data.map((book, index) => (
-          <g
-            key={book.bookName}
-            transform={`translate(${index * (barWidth + gap)},0)`}
-          >
-            <CustomBar
-              fill={colors[index % colors.length]}
-              width={barWidth}
-              height={400}
-            />
-            <text
-              x={barWidth / 2}
-              y="390"
-              textAnchor="middle"
-              fill="#000"
-              fontSize="10px"
-            >
-              {book.totalPages}
-            </text>
-
-            <text
-              transform={`translate(${
-                barWidth / 2 + textOffset
-              }, 200), rotate(-90)`}
-              textAnchor="start"
-              fill="black"
-              fontSize="10px"
-            >
-              {book.bookName}
-            </text>
-          </g>
-        ))}
-      </svg>
-    </div>
+    <ResponsiveContainer width="100%" height={600}>
+      <BarChart
+        data={data}
+        margin={{
+          top: 20,
+          right: 30,
+          left: 30, 
+          bottom: 100, 
+        }}
+      >
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis
+          dataKey="bookName"
+          angle={-90}
+          textAnchor="end"
+          interval={0}
+          height={100} // Adjusted height to accommodate rotated labels
+          style={{ fontSize: '12px' }} // Adjusted font size for better visibility
+        />
+        <YAxis />
+        <Bar dataKey="totalPages" shape={<TriangleBar />} label={{ position: 'top' }}>
+          {data.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
+          ))}
+        </Bar>
+      </BarChart>
+    </ResponsiveContainer>
   );
 };
 
-Chart.propTypes = {
-  data: PropTypes.array.isRequired,
-  fill: PropTypes.string.isRequired,
-  width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
+const TriangleBar = (props) => {
+  const { fill, x, y, width, height } = props;
+
+  const getPath = (x, y, width, height) => {
+    return `M${x},${y + height}C${x + width / 3},${y + height} ${x + width / 2},${y + height / 3}
+    ${x + width / 2}, ${y}
+    C${x + width / 2},${y + height / 3} ${x + (2 * width) / 3},${y + height} ${x + width}, ${y + height}
+    Z`;
+  };
+
+  return <path d={getPath(x, y, width, height)} stroke="none" fill={fill} />;
 };
 
 export default Chart;
