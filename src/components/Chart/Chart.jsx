@@ -13,12 +13,12 @@ const Chart = ({ data }) => {
     return <path d={path} fill={fill} />;
   };
 
-  const barWidth = 70;
+  const barWidth = 100;
   const gap = 10;
   const textOffset = 15;
 
   return (
-    <div className="border rounded-md p-4 lg:w-full w-full  overflow-auto ">
+    <div className="border shadow-md rounded-md p-4 lg:w-full w-full  overflow-auto ">
       <svg width={800} height="400">
         {data.map((book, index) => (
           <g
@@ -43,7 +43,7 @@ const Chart = ({ data }) => {
             <text
               transform={`translate(${
                 barWidth / 2 + textOffset
-              }, 200), rotate(-90)`} 
+              }, 200), rotate(-90)`}
               textAnchor="start"
               fill="black"
               fontSize="10px"
@@ -59,6 +59,9 @@ const Chart = ({ data }) => {
 
 Chart.propTypes = {
   data: PropTypes.array.isRequired,
+  fill: PropTypes.string.isRequired,
+  width: PropTypes.number.isRequired,
+  height: PropTypes.number.isRequired,
 };
 
 export default Chart;

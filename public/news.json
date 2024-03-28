@@ -1,0 +1,29 @@
+{
+    "news": [
+      {
+        "id": 1,
+        "title": "New York Times Bestsellers List",
+        "date": "2024-03-25",
+        "description": "Check out the latest New York Times Bestsellers list featuring top fiction, non-fiction, and children's books.",
+        "image": "https://example.com/news/image1.jpg",
+        "link": "https://www.nytimes.com/books/best-sellers/"
+      },
+      {
+        "id": 2,
+        "title": "BookExpo 2024: Highlights and Recap",
+        "date": "2024-03-20",
+        "description": "Discover the key highlights and events from this year's BookExpo, including author panels, book signings, and industry insights.",
+        "image": "https://example.com/news/image2.jpg",
+        "link": "https://www.bookexpo.com/"
+      },
+      {
+        "id": 3,
+        "title": "New Release: 'The Midnight Library' by Matt Haig",
+        "date": "2024-03-15",
+        "description": "Explore the highly anticipated new release, 'The Midnight Library,' a captivating story about second chances and the power of choices.",
+        "image": "https://example.com/news/image3.jpg",
+        "link": "https://www.matt-haig.com/books/the-midnight-library/"
+      }
+    ]
+  }
+  
