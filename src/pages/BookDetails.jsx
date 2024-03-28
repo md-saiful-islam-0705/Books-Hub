@@ -26,11 +26,10 @@ const BookDetails = () => {
 
   const handleReadButtonClick = (book) => {
     if (!isAddedToRead) {
-      saveBook(book);
+      saveBook({ ...book, wishlist: false });
       toast.success("Book added to Read");
       setIsAddedToRead(true);
-      setIsAddedToWishlist(true);
-      
+      setIsAddedToWishlist(false);
     } else {
       toast.error("Book already added to Read");
     }
@@ -38,10 +37,10 @@ const BookDetails = () => {
 
   const handleWishlistButtonClick = (book) => {
     if (!isAddedToWishlist && !isAddedToRead) {
-      saveBook(book);
+      saveBook({ ...book, wishlist: true });
       toast.success("Book added to Wishlist");
       setIsAddedToWishlist(true);
-      
+      setIsAddedToRead(false);
     } else if (isAddedToRead) {
       toast.error("Book already added to Read, cannot be added to Wishlist");
     } else {

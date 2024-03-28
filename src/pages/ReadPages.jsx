@@ -3,7 +3,7 @@
 const ReadPages = () => {
     return (
         <div>
-            <h1>Read page</h1>
+            <h1>Read Page</h1>
         </div>
     );
 };
