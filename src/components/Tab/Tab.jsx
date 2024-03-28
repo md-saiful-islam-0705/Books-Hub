@@ -20,8 +20,8 @@ const Tab = ({ books, onDelete }) => {
         type="radio"
         name="my_tabs_2"
         role="tab"
-        className="tab"
-        aria-label="Read"
+        className="tab font-bold"
+        aria-label="Read Books"
         checked={activeTab === "read"}
         onChange={() => handleTabChange("read")}
       />
@@ -39,8 +39,8 @@ const Tab = ({ books, onDelete }) => {
         type="radio"
         name="my_tabs_2"
         role="tab"
-        className="tab"
-        aria-label="Wishlist"
+        className="tab font-bold"
+        aria-label="Wishlist Books"
         checked={activeTab === "wishlist"}
         onChange={() => handleTabChange("wishlist")}
       />
