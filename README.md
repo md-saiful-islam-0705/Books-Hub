@@ -1,7 +1,7 @@
-# Bookish Website
+# BooksHub Website
 
 ## Live Site URL
-[Books Hub Website](https://www.example.com)
+[Books Hub Website](https://books-hub-site.netlify.app/)
 
 ## Features and Characteristics
 - **Responsive Design**: The website is designed to be responsive for desktop and mobile devices.
