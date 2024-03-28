@@ -1,4 +1,4 @@
-import React from 'react';
+import PropTypes from "prop-types";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Cell, ResponsiveContainer } from 'recharts';
 
 const colors = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', 'red', 'pink'];
@@ -21,8 +21,8 @@ const Chart = ({ data }) => {
           angle={-90}
           textAnchor="end"
           interval={0}
-          height={100} // Adjusted height to accommodate rotated labels
-          style={{ fontSize: '12px' }} // Adjusted font size for better visibility
+          height={100} 
+          style={{ fontSize: '14px' }} 
         />
         <YAxis />
         <Bar dataKey="totalPages" shape={<TriangleBar />} label={{ position: 'top' }}>
@@ -47,5 +47,13 @@ const TriangleBar = (props) => {
 
   return <path d={getPath(x, y, width, height)} stroke="none" fill={fill} />;
 };
+Chart.propTypes = {
+    data: PropTypes.array.isRequired,
+    fill: PropTypes.string.isRequired,
+    width: PropTypes.number.isRequired,
+    height: PropTypes.number.isRequired,
+    x: PropTypes.number.isRequired,
+    y: PropTypes.number.isRequired,
+  };
 
 export default Chart;
